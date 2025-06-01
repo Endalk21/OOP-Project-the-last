@@ -1,1 +1,39 @@
 
+import java.util.ArrayList;
+import java.util.List;
+
+public class Hotel {
+    private String name;
+    private String address;
+    private List<Room> rooms = new ArrayList<>();
+    private List<Amenity> amenities = new ArrayList<>();
+
+    public Hotel(String name, String address) {
+        this.name = name;
+        this.address = address;
+    }
+
+    public void addRoom(Room room) {
+        rooms.add(room);
+    }
+
+    public void addAmenity(Amenity amenity) {
+        amenities.add(amenity);
+    }
+
+    public List<Room> getRooms() {
+        return rooms;
+    }
+
+    public List<Amenity> getAmenities() {
+        return amenities;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+}
