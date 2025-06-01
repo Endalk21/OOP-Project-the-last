@@ -1,0 +1,11 @@
+// File: ReservationStatus.java
+
+/**
+ * Represents the status of a reservation.
+ */
+public enum ReservationStatus {
+    PENDING,
+    CONFIRMED,
+    CANCELLED,
+    COMPLETED
+}
