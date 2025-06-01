@@ -1,8 +1,0 @@
-import java.time.LocalDate;
-
-public class ExternalServiceIntegration {
-    public void suggestExtras(Customer customer, LocalDate date) {
-        System.out.println("Suggesting car rentals and excursions to " + customer.getName() + " for " + date);
-        // Actual integration with external APIs
-    }
-}

@@ -1,7 +1,0 @@
-public class LoyaltyProgram {
-    public void updateLoyaltyPoints(Customer customer, double amount) {
-        int points = (int)(amount / 10);  // e.g., $10 = 1 point
-        customer.addLoyaltyPoints(points);
-        System.out.println("Loyalty points added: " + points);
-    }
-}
