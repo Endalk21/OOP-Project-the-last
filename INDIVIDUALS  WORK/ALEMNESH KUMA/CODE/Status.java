@@ -6,5 +6,5 @@ public enum Status
         CANCELLED, 
         PENDING,
         PAID,
-        REFUNDED
+        REFUNDED, Cancelled
     }
