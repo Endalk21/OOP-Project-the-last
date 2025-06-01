@@ -1,0 +1,181 @@
+class Customer {
+    private final String customerId;
+    private String name;
+    private String email;
+    private String phoneNumber;
+    private int loyaltyPoints;
+    private String paymentInfoToken; // Represents a token for stored payment details
+
+    public Customer(String name, String email, String phoneNumber) {
+        this.customerId = UUID.randomUUID().toString();
+        this.name = name;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.loyaltyPoints = 0;
+    }
+
+    // --- Getters and Setters ---
+    public String getCustomerId() { return customerId; }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+    public String getPhoneNumber() { return phoneNumber; }
+    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
+    public int getLoyaltyPoints() { return loyaltyPoints; }
+    public void addLoyaltyPoints(int points) { this.loyaltyPoints += points; }
+    public void redeemLoyaltyPoints(int points) {
+        if (this.loyaltyPoints >= points) {
+            this.loyaltyPoints -= points;
+        } else {
+            System.out.println("Not enough loyalty points to redeem.");
+        }
+    }
+    public String getPaymentInfoToken() { return paymentInfoToken; }
+    public void setPaymentInfoToken(String paymentInfoToken) { this.paymentInfoToken = paymentInfoToken; }
+
+    @Override
+    public String toString() {
+        return "Customer[ID=" + customerId.substring(0, Math.min(8, customerId.length())) + "..., Name=" + name + ", Email=" + email + ", LoyaltyPoints=" + loyaltyPoints + "]";
+    }
+}
+
+/**
+ * Represents a single room within a hotel.
+ */
+class Room {
+    private final String roomId; // Unique within a hotel, e.g., "101"
+    private final String hotelId; // Links back to the hotel it belongs to
+    private RoomType type;
+    private double basePricePerNight;
+    private List<Amenity> roomSpecificAmenities; // Amenities specific to this room
+
+    public Room(String hotelId, String roomId, RoomType type, double basePricePerNight, List<Amenity> roomSpecificAmenities) {
+        this.hotelId = hotelId;
+        this.roomId = roomId;
+        this.type = type;
+        this.basePricePerNight = basePricePerNight;
+        this.roomSpecificAmenities = new ArrayList<>(roomSpecificAmenities);
+    }
+
+    // --- Getters ---
+    public String getRoomId() { return roomId; }
+    public String getHotelId() { return hotelId; }
+    public RoomType getType() { return type; }
+    public double getBasePricePerNight() { return basePricePerNight; }
+    public List<Amenity> getRoomSpecificAmenities() { return new ArrayList<>(roomSpecificAmenities); } // Return a copy
+
+
+    @Override
+    public String toString() {
+        String amenitiesString = roomSpecificAmenities.isEmpty() ? "None" :
+                                 roomSpecificAmenities.stream()
+                                                      .map(Amenity::getDescription)
+                                                      .collect(Collectors.joining(", "));
+        return "Room[ID=" + roomId + ", Type=" + type.getDescription() +
+               ", Price/Night=$" + String.format("%.2f", basePricePerNight) +
+               ", Specific Amenities=" + amenitiesString + "]";
+    }
+}
+
+/**
+ * Represents a hotel in the system.
+ */
+class Hotel {
+    private final String hotelId;
+    private String name;
+    private String location;
+    private List<Room> rooms; // List of rooms in this hotel
+    private List<Amenity> hotelAmenities; // General amenities offered by the hotel
+    private int starRating;
+
+    public Hotel(String name, String location, int starRating, List<Amenity> hotelAmenities) {
+        this.hotelId = UUID.randomUUID().toString();
+        this.name = name;
+        this.location = location;
+        this.starRating = starRating;
+        this.rooms = new ArrayList<>();
+        this.hotelAmenities = new ArrayList<>(hotelAmenities);
+    }
+
+    public void addRoom(Room room) {
+        if (room.getHotelId().equals(this.hotelId)) {
+            this.rooms.add(room);
+        } else {
+            System.err.println("Error: Trying to add room with incorrect hotelId " + room.getHotelId() +
+                               " to hotel " + this.name + " (Id: " + this.hotelId + ")");
+        }
+    }
+
+    // --- Getters ---
+    public String getHotelId() { return hotelId; }
+    public String getName() { return name; }
+    public String getLocation() { return location; }
+    public int getStarRating() { return starRating; }
+    public List<Room> getRooms() { return new ArrayList<>(rooms); } // Return a copy
+    public List<Amenity> getHotelAmenities() { return new ArrayList<>(hotelAmenities); } // Return a copy
+
+
+    @Override
+    public String toString() {
+        String amenitiesString = hotelAmenities.isEmpty() ? "None" :
+                                 hotelAmenities.stream()
+                                                .map(Amenity::getDescription)
+                                                .collect(Collectors.joining(", "));
+        return "Hotel[ID=" + hotelId.substring(0,8) + "..., Name=" + name + ", Location=" + location +
+               ", Rating=" + starRating + " stars, General Amenities=" + amenitiesString +
+               ", Total Rooms=" + rooms.size() + "]";
+    }
+}
+
+
+class Reservation {
+    private final String reservationId;
+    private final String customerId;
+    private final String hotelId;
+    private final String roomId;
+    private LocalDate checkInDate;
+    private LocalDate checkOutDate;
+    private double totalPrice;
+    private ReservationStatus status;
+
+    public Reservation(String customerId, String hotelId, String roomId, LocalDate checkInDate, LocalDate checkOutDate, double totalPrice) {
+        this.reservationId = UUID.randomUUID().toString();
+        this.customerId = customerId;
+        this.hotelId = hotelId;
+        this.roomId = roomId;
+        this.checkInDate = checkInDate;
+        this.checkOutDate = checkOutDate;
+        this.totalPrice = totalPrice;
+        this.status = ReservationStatus.PENDING; // Default status
+    }
+
+    
+    public String getReservationId() { return reservationId; }
+    public String getCustomerId() { return customerId; }
+    public String getHotelId() { return hotelId; }
+    public String getRoomId() { return roomId; }
+    public LocalDate getCheckInDate() { return checkInDate; }
+    public LocalDate getCheckOutDate() { return checkOutDate; }
+    public double getTotalPrice() { return totalPrice; }
+    public ReservationStatus getStatus() { return status; }
+    public void setStatus(ReservationStatus status) { this.status = status; }
+    public void setTotalPrice(double totalPrice) { this.totalPrice = totalPrice; }
+
+   
+    public boolean overlaps(LocalDate otherCheckIn, LocalDate otherCheckOut) {
+     
+        return checkInDate.isBefore(otherCheckOut) && otherCheckIn.isBefore(checkOutDate);
+    }
+
+    @Override
+    public String toString() {
+        return "Reservation[ID=" + reservationId +
+               ", CustID=" + customerId.substring(0,Math.min(8, customerId.length())) + "..." +
+               ", HotelID=" + hotelId.substring(0,Math.min(8, hotelId.length())) + "..." +
+               ", RoomID=" + roomId +
+               ", Dates=" + checkInDate + " to " + checkOutDate +
+               ", Price=$" + String.format("%.2f", totalPrice) +
+               ", Status=" + status + "]";
+    }
+}
