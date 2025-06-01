@@ -1,0 +1,32 @@
+// File: Amenity.java
+
+/**
+ * Represents various amenities that a hotel or a room can offer.
+ */
+public enum Amenity {
+    WIFI("Free WiFi"),
+    POOL("Swimming Pool"),
+    GYM("Fitness Center"),
+    RESTAURANT("On-site Restaurant"),
+    PARKING("Free Parking"),
+    SPA("Spa Services");
+
+    private final String description;
+
+    Amenity(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public static Amenity fromString(String text) {
+        for (Amenity a : Amenity.values()) {
+            if (a.name().equalsIgnoreCase(text) || a.getDescription().equalsIgnoreCase(text)) {
+                return a;
+            }
+        }
+        return null; // Or throw an IllegalArgumentException
+    }
+}
