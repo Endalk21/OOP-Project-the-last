@@ -1,4 +1,4 @@
-package model;
+package models;
 
 import java.util.*;
 
@@ -16,5 +16,21 @@ public class Comment {
 
     public void reply(Comment comment) {
         replies.add(comment);
+    }
+
+    public List<Comment> getReplies() {
+        return replies;
+    }
+
+    public User getCommenter() {
+        return commenter;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
     }
 }

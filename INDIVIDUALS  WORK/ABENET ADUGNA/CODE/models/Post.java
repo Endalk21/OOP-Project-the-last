@@ -1,4 +1,4 @@
-package model;
+package models;
 
 import java.util.*;
 
@@ -34,6 +34,15 @@ public class Post {
         mediaList.add(media);
     }
 
+    public void share(User user) {
+        shareCount++;
+        author.receiveNotification(new Notification(user.getUsername() + " shared your post."));
+    }
+
+    public int getShareCount() {
+        return shareCount;
+    }
+
     public User getAuthor() {
         return author;
     }
@@ -42,11 +51,20 @@ public class Post {
         return caption;
     }
 
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
     public Set<User> getLikes() {
         return likes;
     }
 
     public List<Comment> getComments() {
         return comments;
+    }
+
+    @Override
+    public String toString() {
+        return "Post by " + author.getUsername() + ": " + caption;
     }
 }

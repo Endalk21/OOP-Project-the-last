@@ -1,8 +1,7 @@
 package app;
 
-import model.*;
+import models.*;
 import utils.*;
-
 import java.util.*;
 
 public class Main {
@@ -21,8 +20,7 @@ public class Main {
 
         System.out.println("\n--- Alice's Feed ---");
         for (Post post : alice.getFeed()) {
-            System.out.println("Post by: " + post.getAuthor().getUsername());
-            System.out.println("Caption: " + post.getCaption());
+            System.out.println(post);
             System.out.println("Likes: " + post.getLikes().size());
             System.out.println("Comments: " + post.getComments().size());
         }

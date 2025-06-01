@@ -1,4 +1,4 @@
-package model;
+package models;
 
 public class TextContent extends Media {
     public TextContent(String content) {

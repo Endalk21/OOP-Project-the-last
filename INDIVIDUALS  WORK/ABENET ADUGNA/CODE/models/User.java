@@ -1,4 +1,4 @@
-package model;
+package models;
 
 import utils.Role;
 import java.util.*;
@@ -7,7 +7,7 @@ public class User {
     private String username;
     private String name;
     private String email;
-    private String password;
+    private String password; // Note: In real apps, hash this!
     private String bio;
     private String profilePictureUrl;
     private Role role;
@@ -21,7 +21,7 @@ public class User {
         this.username = username;
         this.name = name;
         this.email = email;
-        this.password = password;
+        this.password = password; // TODO: Hash this in real apps
         this.role = role;
         this.privacySettings = new PrivacySettings();
     }
@@ -37,6 +37,7 @@ public class User {
         for (User user : following) {
             feed.addAll(user.posts);
         }
+        feed.sort(Comparator.comparing(Post::getTimestamp).reversed());
         return feed;
     }
 
@@ -54,5 +55,10 @@ public class User {
 
     public List<Notification> getNotifications() {
         return notifications;
+    }
+
+    @Override
+    public String toString() {
+        return username + " (" + name + ")";
     }
 }
