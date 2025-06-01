@@ -1,0 +1,19 @@
+interface PricingStrategy {
+    double calculatePrice(Room room, LocalDate checkIn, LocalDate checkOut, Customer customer);
+}
+
+/**
+ * Interface for payment processing services.
+ * Abstracts the actual payment gateway interaction.
+ */
+interface PaymentService {
+    boolean processPayment(Customer customer, double amount, String paymentDetailsToken);
+    boolean refundPayment(String transactionId, double amount);
+}
+
+/**
+ * Interface for gateways to external services (e.g., car rentals, excursions).
+ */
+interface ExternalServiceGateway {
+    boolean bookService(String serviceType, String customerId, Map<String, String> details);
+}
