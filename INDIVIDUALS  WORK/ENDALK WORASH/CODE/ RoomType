@@ -1,30 +1,64 @@
-// File: RoomType.java
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Scanner;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
-/**
- * Represents the different types of rooms available in a hotel.
- */
-public enum RoomType {
+
+/
+enum RoomType {
     SINGLE("Single Room"),
     DOUBLE("Double Room"),
     SUITE("Suite"),
     FAMILY("Family Room");
 
     private final String description;
-
-    RoomType(String description) {
-        this.description = description;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
+    RoomType(String description) { this.description = description; }
+    public String getDescription() { return description; }
     public static RoomType fromString(String text) {
         for (RoomType b : RoomType.values()) {
             if (b.name().equalsIgnoreCase(text) || b.getDescription().equalsIgnoreCase(text)) {
                 return b;
             }
         }
-        return null; // Or throw an IllegalArgumentException
+        return null;
     }
+}
+
+
+enum Amenity {
+    WIFI("Free WiFi"),
+    POOL("Swimming Pool"),
+    GYM("Fitness Center"),
+    RESTAURANT("On-site Restaurant"),
+    PARKING("Free Parking"),
+    SPA("Spa Services");
+
+    private final String description;
+    Amenity(String description) { this.description = description; }
+    public String getDescription() { return description; }
+    public static Amenity fromString(String text) {
+        for (Amenity a : Amenity.values()) {
+            if (a.name().equalsIgnoreCase(text) || a.getDescription().equalsIgnoreCase(text)) {
+                return a;
+            }
+        }
+        return null;
+    }
+}
+
+/**
+ * Represents the status of a reservation.
+ */
+enum ReservationStatus {
+    PENDING, CONFIRMED, CANCELLED, COMPLETED
 }
