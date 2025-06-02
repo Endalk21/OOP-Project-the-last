@@ -7,7 +7,7 @@ public class User {
     private String username;
     private String name;
     private String email;
-    private String password; // Note: In real apps, hash this!
+    private String password;
     private String bio;
     private String profilePictureUrl;
     private Role role;
@@ -21,7 +21,7 @@ public class User {
         this.username = username;
         this.name = name;
         this.email = email;
-        this.password = password; // TODO: Hash this in real apps
+        this.password = password;
         this.role = role;
         this.privacySettings = new PrivacySettings();
     }
