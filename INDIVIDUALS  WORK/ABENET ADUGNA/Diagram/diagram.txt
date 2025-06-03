@@ -1,0 +1,121 @@
+@startuml
+
+' Base abstract class
+abstract class Media {
+  - url: String
+  - type: String
+  + getUrl(): String
+  + getType(): String
+}
+
+class Image extends Media
+class Video extends Media
+class TextContent extends Media
+
+class Comment {
+  - commenter: User
+  - message: String
+  - timestamp: Date
+  - replies: List<Comment>
+  + reply(comment: Comment): void
+  + getReplies(): List<Comment>
+  + getCommenter(): User
+  + getMessage(): String
+  + getTimestamp(): Date
+}
+
+class Notification {
+  - message: String
+  - timestamp: Date
+  - isRead: boolean
+  + markAsRead(): void
+  + getMessage(): String
+  + getTimestamp(): Date
+}
+
+class Post {
+  - id: int
+  - author: User
+  - caption: String
+  - mediaList: List<Media>
+  - timestamp: Date
+  - comments: List<Comment>
+  - likes: Set<User>
+  - shareCount: int
+  + like(user: User): void
+  + comment(user: User, message: String): void
+  + addMedia(media: Media): void
+  + share(user: User): void
+  + getShareCount(): int
+  + getAuthor(): User
+  + getCaption(): String
+  + getTimestamp(): Date
+  + getLikes(): Set<User>
+  + getComments(): List<Comment>
+  + toString(): String
+}
+
+class PrivacySettings {
+  - isPrivate: boolean
+  - allowComments: boolean
+  - allowTags: boolean
+  + isPrivate(): boolean
+  + setPrivate(isPrivate: boolean): void
+  + isAllowComments(): boolean
+  + setAllowComments(allowComments: boolean): void
+  + isAllowTags(): boolean
+  + setAllowTags(allowTags: boolean): void
+}
+
+class User {
+  - username: String
+  - name: String
+  - email: String
+  - password: String
+  - bio: String
+  - profilePictureUrl: String
+  - role: Role
+  - privacySettings: PrivacySettings
+  - followers: Set<User>
+  - following: Set<User>
+  - posts: List<Post>
+  - notifications: List<Notification>
+  + follow(user: User): void
+  + createPost(post: Post): void
+  + receiveNotification(notification: Notification): void
+  + getFeed(): List<Post>
+  + getUsername(): String
+  + getNotifications(): List<Notification>
+  + toString(): String
+}
+
+enum Role {
+  USER
+  CREATOR
+  ADMIN
+}
+
+class Main
+
+' Relationships
+User --> PrivacySettings
+User --> Post
+User --> Notification
+User --> User : "followers / following"
+Post --> Media
+Post --> Comment
+Post --> User : "author"
+Post --> Notification
+Comment --> User : "commenter"
+Comment --> Comment : "replies"
+Notification --> User
+Media <|-- Image
+Media <|-- Video
+Media <|-- TextContent
+
+Main ..> User
+Main ..> Post
+Main ..> Comment
+Main ..> Notification
+
+@enduml
