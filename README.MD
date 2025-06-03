@@ -7,6 +7,7 @@ Object Oriented Modelling Assignment
 This repository contains the OOP (Object Oriented Programming) modelling assignment for Group 7.
 
 ## Group Members
+1. Abenet Adugna *(abenetdev)*
 1. Endalk Worash *(Endalk21)*
 2. Alemnesh Kuma (mero0128)
 3. Yodit Solomon *(judy707)*
