@@ -1,0 +1,4 @@
+// File: RideRequestStatus.java
+public enum RideRequestStatus {
+    PENDING, SEARCHING_FOR_DRIVER, DRIVER_ASSIGNED, CANCELLED_BY_RIDER, NO_DRIVERS_AVAILABLE
+}
